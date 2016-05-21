@@ -4,25 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>DateTools.xcscheme</key>
+		<key>BSCalendarViewSample.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-BSCalendarViewSample.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
+			<key>orderHint</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>AFEDA8059B169E4068B6DCC4D2F0B0E9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D452297970914826EF8C34A6F661F15F</key>
+		<key>84BDB18A1CEF559F00D65C8F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

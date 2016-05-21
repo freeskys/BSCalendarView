@@ -2,7 +2,7 @@ PODS:
   - DateTools (1.7.0)
 
 DEPENDENCIES:
-  - DateTools
+  - DateTools (~> 1.7.0)
 
 SPEC CHECKSUMS:
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60

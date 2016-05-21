@@ -1,6 +1,0 @@
-framework module Pods_BSCalendarView {
-  umbrella header "Pods-BSCalendarView-umbrella.h"
-
-  export *
-  module * { export * }
-}
