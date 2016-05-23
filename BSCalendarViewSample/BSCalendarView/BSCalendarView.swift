@@ -126,11 +126,17 @@ public class BSCalendarView: UIView {
     //height change animation duration
     public var animationDuration: NSTimeInterval = 0.25
     
+    public var displayingMonthCalendarHeight: CGFloat {
+        get {
+            return caculateMonthCollectionItemHeight(displayingMonthItem)
+        }
+    }
+    
     //MARK:items
-    public var willDisplayMonthItem: BSCalendarMonthItem!
+    public private(set) var willDisplayMonthItem: BSCalendarMonthItem!
     //this item would be different with 'displayingMonthItem' only when scroll half of size
-    public var didDisplayMonthItem: BSCalendarMonthItem!
-    public var displayingMonthItem: BSCalendarMonthItem! {
+    public private(set) var didDisplayMonthItem: BSCalendarMonthItem!
+    public private(set) var displayingMonthItem: BSCalendarMonthItem! {
         didSet {
             if displayingMonthItem != oldValue {
                 displayingMonthDidChangeClosure?(month: displayingMonthItem.month)
@@ -223,12 +229,12 @@ public class BSCalendarView: UIView {
         return c
     }()
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -241,7 +247,7 @@ public class BSCalendarView: UIView {
         }
         
         updateFrame()
-        
+        scrollToCorrectMonth()
     }
     
 }
@@ -257,11 +263,7 @@ extension BSCalendarView {
         updateMonthText()
         
         setupSubviews()
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-            [unowned self] in
-            self.scrollToCorrectMonth()
-        }
+
     }
     
     func setupDisplayingMonthItem() {

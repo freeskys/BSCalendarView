@@ -30,6 +30,7 @@ class BSViewController: UIViewController {
             calendarView.roundDayTextColor = UIColor.cyanColor()
             calendarView.dayHeight = 50
             
+            
             calendarView.heightDidChangeClosure = { height in
                 print("height = \(height)")
             }

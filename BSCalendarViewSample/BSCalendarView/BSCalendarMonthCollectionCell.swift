@@ -143,7 +143,7 @@ extension BSCalendarMonthCollectionCell: UICollectionViewDataSource {
 extension BSCalendarMonthCollectionCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: bs_width/7,
+        return CGSize(width: floor(bs_width/7),
                       height: dayHeight)
     }
     
