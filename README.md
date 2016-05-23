@@ -8,11 +8,16 @@ if the view did not add constraints, you need to rotate the view manually when s
 
 ## Installation
 
-> pod 'BSCalendarView', '~> 0.0.1'
+> use_frameworks!
+
+> pod 'BSCalendarView'
 
 ## Usage
 
 ###Important: the height will be caculate automaticaly, you can just set 0 to initliaze
+
+*   `monthHeight`, `weekdayHeight`, `dayHeight`, these three properties determine the height
+*   `displayingMonthCalendarHeight` return the current month height
 
 ```swift
 let calendarView = BSCalendarView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 0))
