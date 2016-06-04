@@ -30,7 +30,6 @@ class BSViewController: UIViewController {
             calendarView.roundDayTextColor = UIColor.cyanColor()
             calendarView.dayHeight = 50
             
-            
             calendarView.heightDidChangeClosure = { height in
                 print("height = \(height)")
             }
@@ -45,17 +44,4 @@ class BSViewController: UIViewController {
         }
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        
-    }
 }

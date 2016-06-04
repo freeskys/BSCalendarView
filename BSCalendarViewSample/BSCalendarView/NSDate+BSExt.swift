@@ -10,7 +10,7 @@ import Foundation
 
 extension NSDate {
     
-    func previousMonth() -> Int {
+    func bs_previousMonth() -> Int {
         
         if month() == 1 {
             return 12
@@ -18,7 +18,7 @@ extension NSDate {
         return month() - 1
     }
     
-    func nextMonth() -> Int {
+    func bs_nextMonth() -> Int {
         
         if month() == 12 {
             return 1

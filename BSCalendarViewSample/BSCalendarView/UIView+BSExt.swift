@@ -8,16 +8,7 @@
 
 import UIKit
 
-extension UIView {
-    func image() -> UIImage{
-        UIGraphicsBeginImageContext(bounds.size);
-        drawViewHierarchyInRect(bounds, afterScreenUpdates: false)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image
-    }
-}
+
 
 public extension UIView {
     var bs_x: CGFloat {

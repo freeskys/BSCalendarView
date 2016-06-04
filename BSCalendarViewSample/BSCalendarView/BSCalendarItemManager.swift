@@ -120,12 +120,12 @@ extension BSCalendarItemManager {
         
         let date = NSDate()
         let monthFirstDayDate = NSDate(year: date.year(), month: month, day: 1)
-        let monthLastDayDate = NSDate(year: date.year(), month: monthFirstDayDate.nextMonth(), day: 1).dateBySubtractingDays(1)
+        let monthLastDayDate = NSDate(year: date.year(), month: monthFirstDayDate.bs_nextMonth(), day: 1).dateBySubtractingDays(1)
         
         var dayItems: [BSCalendarDayItem] = []
         
         let monthLastDayWeekDay = monthLastDayDate.weekday() - 1
-        let nextMonth = monthLastDayDate.nextMonth()
+        let nextMonth = monthLastDayDate.bs_nextMonth()
         for day in 0..<(6 - monthLastDayWeekDay) {
             let dayItem = BSCalendarDayItem()
             

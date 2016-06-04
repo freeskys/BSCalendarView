@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "BSCalendarView"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "a horizontal calendar view, with many properties to custom and animate height when scroll"
 
   # This description is used to generate tags and improve search results.
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/blurryssky/BSCalendarView.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/blurryssky/BSCalendarView.git", :tag => "0.0.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
