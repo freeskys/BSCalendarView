@@ -16,7 +16,7 @@ class BSCalendarDayCollectionCell: UICollectionViewCell {
     
     var themeColor: UIColor! {
         didSet {
-            todayLineLayer.strokeColor = themeColor.CGColor
+            todayLineLayer.strokeColor = themeColor.cgColor
             selectedDayView.backgroundColor = themeColor
         }
     }
@@ -39,16 +39,16 @@ class BSCalendarDayCollectionCell: UICollectionViewCell {
             dayLabel.textColor = dayTextColor
             
             if dayItem.isToday == true {
-                todayLineLayer.hidden = false
+                todayLineLayer.isHidden = false
             } else {
-                todayLineLayer.hidden = true
+                todayLineLayer.isHidden = true
                 
                 if dayItem.isSelectedDay == true {
                     dayLabel.textColor = selectedDayTextColor
-                    todayLineLayer.hidden = true
-                    selectedDayView.hidden = false
+                    todayLineLayer.isHidden = true
+                    selectedDayView.isHidden = false
                 } else {
-                    selectedDayView.hidden = true
+                    selectedDayView.isHidden = true
                     
                     if dayItem.isWeekendDay {
                         dayLabel.textColor = weekendDayTextColor
@@ -65,32 +65,32 @@ class BSCalendarDayCollectionCell: UICollectionViewCell {
         }
     }
     
-    private lazy var dayLabel: UILabel = {
+    fileprivate lazy var dayLabel: UILabel = {
         let day: UILabel = UILabel(frame: self.bounds)
-        day.textAlignment = .Center
-        day.font = UIFont.boldSystemFontOfSize(14)
+        day.textAlignment = .center
+        day.font = UIFont.boldSystemFont(ofSize: 14)
         return day
     }()
     
-    private lazy var todayLineLayer: CAShapeLayer = {
+    fileprivate lazy var todayLineLayer: CAShapeLayer = {
         let path: UIBezierPath = UIBezierPath()
-        path.moveToPoint(CGPoint(x: 14, y: self.bs_height/2 + 10))
-        path.addLineToPoint(CGPoint(x: self.bs_width - 14, y: self.bs_height/2 + 10))
-        path.lineCapStyle = .Butt
+        path.move(to: CGPoint(x: 14, y: self.bs_height/2 + 10))
+        path.addLine(to: CGPoint(x: self.bs_width - 14, y: self.bs_height/2 + 10))
+        path.lineCapStyle = .butt
         
         let line: CAShapeLayer = CAShapeLayer()
-        line.path = path.CGPath
-        line.hidden = true
+        line.path = path.cgPath
+        line.isHidden = true
         line.lineWidth = 2
 
         return line
     }()
     
-    private lazy var selectedDayView: UIView = {
-        let se: UIView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: self.bs_height - Constants.SelectedDayViewHeightInset, height: self.bs_height - Constants.SelectedDayViewHeightInset)))
+    fileprivate lazy var selectedDayView: UIView = {
+        let se: UIView = UIView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: self.bs_height - Constants.SelectedDayViewHeightInset, height: self.bs_height - Constants.SelectedDayViewHeightInset)))
         se.center = CGPoint(x: self.bs_width/2, y: self.bs_height/2)
         se.layer.cornerRadius = 6
-        se.hidden = true
+        se.isHidden = true
         return se
     }()
     

@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import DateTools
+import DateToolsSwift
 
 class BSCalendarItemManager: NSObject {
     
-    var monthRange: NSRange = NSRange(location: 1, length: NSDate().month() - 1) {
+    var monthRange: NSRange = NSRange(location: 1, length: Date().month - 1) {
         didSet {
             monthItems = configureMonthItems()
         }
@@ -39,15 +39,15 @@ extension BSCalendarItemManager {
         return items
     }
     
-    func configureDayItems(month month:Int) -> [BSCalendarDayItem] {
+    func configureDayItems(month:Int) -> [BSCalendarDayItem] {
 
         var dayItems: [BSCalendarDayItem] = []
         
-        dayItems.appendContentsOf(configurePreviousMonthDayItems(month: month))
-        dayItems.appendContentsOf(configureMonthDayItems(month: month))
-        dayItems.appendContentsOf(configureNextMonthDayItems(month: month))
+        dayItems.append(contentsOf: configurePreviousMonthDayItems(month: month))
+        dayItems.append(contentsOf: configureMonthDayItems(month: month))
+        dayItems.append(contentsOf: configureNextMonthDayItems(month: month))
 
-        if month > NSDate().month() {
+        if month > Date().month {
             dayItems.forEach({ (dayItem: BSCalendarDayItem) in
                 dayItem.isFutureDay = true
             })
@@ -56,22 +56,24 @@ extension BSCalendarItemManager {
         return dayItems
     }
     
-    func configurePreviousMonthDayItems(month month:Int) -> [BSCalendarDayItem] {
+    func configurePreviousMonthDayItems(month:Int) -> [BSCalendarDayItem] {
         
-        let date = NSDate()
-        let monthFirstDayDate = NSDate(year: date.year(), month: month, day: 1)
+        let date = Date()
+        let monthFirstDayDate = Date(year: date.year, month: month, day: 1)
 
         var dayItems: [BSCalendarDayItem] = []
         
-        let firstDayWeekDay = monthFirstDayDate.weekday()
+        let firstDayWeekDay = monthFirstDayDate.weekday
         for day in 1..<firstDayWeekDay {
             
             let dayItem = BSCalendarDayItem()
             
-            let dayDate = monthFirstDayDate.dateBySubtractingDays(firstDayWeekDay - day)
+//            let dayDate = monthFirstDayDate.dateBySubtractingDays(firstDayWeekDay - day)
+            let minusDay = firstDayWeekDay - day
+            let dayDate = monthFirstDayDate.subtract(TimeChunk(seconds: 0, minutes: 0, hours: 0, days: minusDay, weeks: 0, months: 0, years: 0))
             
-            dayItem.day = dayDate.day()
-            dayItem.month = dayDate.month()
+            dayItem.day = dayDate.day
+            dayItem.month = dayDate.month
             dayItems.append(dayItem)
             
             dayItem.isRoundDay = true
@@ -80,11 +82,11 @@ extension BSCalendarItemManager {
         return dayItems
     }
     
-    func configureMonthDayItems(month month:Int) -> [BSCalendarDayItem] {
+    func configureMonthDayItems(month:Int) -> [BSCalendarDayItem] {
         
-        let date = NSDate()
-        let monthFirstDayDate = NSDate(year: date.year(), month: month, day: 1)
-        let days = monthFirstDayDate.daysInMonth()
+        let date = Date()
+        let monthFirstDayDate = Date(year: date.year, month: month, day: 1)
+        let days = monthFirstDayDate.daysInMonth
         
         var dayItems: [BSCalendarDayItem] = []
         
@@ -96,12 +98,12 @@ extension BSCalendarItemManager {
             dayItem.month = month
             dayItems.append(dayItem)
             
-            if month == date.month() {
-                if day == date.day() {
+            if month == date.month {
+                if day == date.day {
                     
                     dayItem.isToday = true
                     
-                } else if day > date.day() {
+                } else if day > date.day {
                     
                     dayItem.isFutureDay = true
                     
@@ -116,15 +118,16 @@ extension BSCalendarItemManager {
         return dayItems
     }
     
-    func configureNextMonthDayItems(month month:Int) -> [BSCalendarDayItem] {
+    func configureNextMonthDayItems(month:Int) -> [BSCalendarDayItem] {
         
-        let date = NSDate()
-        let monthFirstDayDate = NSDate(year: date.year(), month: month, day: 1)
-        let monthLastDayDate = NSDate(year: date.year(), month: monthFirstDayDate.bs_nextMonth(), day: 1).dateBySubtractingDays(1)
+        let date = Date()
+        let monthFirstDayDate = Date(year: date.year, month: month, day: 1)
+        let monthLastDayDate = Date(year: date.year, month: monthFirstDayDate.bs_nextMonth(), day: 1).subtract(TimeChunk(seconds: 0, minutes: 0, hours: 0, days: 1, weeks: 0, months: 0, years: 0))
+//        let monthLastDayDate = Date(year: date.year, month: monthFirstDayDate.bs_nextMonth(), day: 1).dateBySubtractingDays(1)
         
         var dayItems: [BSCalendarDayItem] = []
         
-        let monthLastDayWeekDay = monthLastDayDate.weekday() - 1
+        let monthLastDayWeekDay = monthLastDayDate.weekday - 1
         let nextMonth = monthLastDayDate.bs_nextMonth()
         for day in 0..<(6 - monthLastDayWeekDay) {
             let dayItem = BSCalendarDayItem()
@@ -135,7 +138,7 @@ extension BSCalendarItemManager {
             
             dayItem.isRoundDay = true
             
-            if nextMonth > date.month() {
+            if nextMonth > date.month {
                 dayItem.isFutureDay = true
             }
         }

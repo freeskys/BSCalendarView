@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import DateTools
+import DateToolsSwift
 
 private enum CalendarScrollDirection {
-    case Left
-    case Right
+    case left
+    case right
 }
 
 private struct Constants {
@@ -20,34 +20,34 @@ private struct Constants {
     static let MonthCollectionReuseCellIdentifier = "BSCalendarCollectionCell"
 }
 
-public typealias DayItemClosure = (dayItem: BSCalendarDayItem) -> Void
+public typealias DayItemClosure = (_ dayItem: BSCalendarDayItem) -> Void
 
-public class BSCalendarView: UIView {
+open class BSCalendarView: UIView {
     
     //MARK:closure
-    public var heightDidChangeClosure: ((height: CGFloat) -> Void)?
+    open var heightDidChangeClosure: ((_ height: CGFloat) -> Void)?
     
     //range 0.01 ~ 0.99
-    public var scrollXPercentageClosure: ((percentage: CGFloat) -> Void)?
-    public var displayingMonthDidChangeClosure: ((month: Int) -> Void)?
+    open var scrollXPercentageClosure: ((_ percentage: CGFloat) -> Void)?
+    open var displayingMonthDidChangeClosure: ((_ month: Int) -> Void)?
     
-    public var dayDidSelectedClosure: DayItemClosure?
+    open var dayDidSelectedClosure: DayItemClosure?
     
     //MARK:Vars
-    public var themeColor = UIColor.redColor() {
+    open var themeColor = UIColor.red {
         didSet {
             monthLabel.textColor = themeColor
         }
     }
     
-    public var separatorHidden = false {
+    open var separatorHidden = false {
         didSet {
-            separator.hidden = separatorHidden
+            separator.isHidden = separatorHidden
         }
     }
     
     //location range (1, 12), length range(0, 11)
-    public var monthRange = NSRange(location: 1, length: NSDate().month() - 1) {
+    open var monthRange = NSRange(location: 1, length: Date().month - 1) {
         didSet {
             
             guard monthRange.location >= 1 && monthRange.location <= 12 else {
@@ -66,7 +66,7 @@ public class BSCalendarView: UIView {
         }
     }
     
-    public var monthHeight: CGFloat = 40 {
+    open var monthHeight: CGFloat = 40 {
         didSet {
             if monthHeight == 0 {
                 bs_previousMonthButton.removeFromSuperview()
@@ -76,16 +76,16 @@ public class BSCalendarView: UIView {
     }
     
     //important!: only change the text, can't disturb the order
-    public var weekdayTitles = ["日", "一", "二", "三", "四", "五", "六"] {
+    open var weekdayTitles = ["日", "一", "二", "三", "四", "五", "六"] {
         didSet {
             weekdayLabels.forEach { (label: UILabel) in
-                let i = weekdayLabels.indexOf(label)!
+                let i = weekdayLabels.index(of: label)!
                 label.text = weekdayTitles[i]
             }
         }
     }
     
-    public var weekdayFont = UIFont.boldSystemFontOfSize(14) {
+    open var weekdayFont = UIFont.boldSystemFont(ofSize: 14) {
         didSet {
             weekdayLabels.forEach { (label: UILabel) in
                 label.font = weekdayFont
@@ -93,7 +93,7 @@ public class BSCalendarView: UIView {
         }
     }
     
-    public var weekdayTextColor = UIColor.lightGrayColor() {
+    open var weekdayTextColor = UIColor.lightGray {
         didSet {
             weekdayLabels.forEach { (label: UILabel) in
                 label.textColor = weekdayTextColor
@@ -101,7 +101,7 @@ public class BSCalendarView: UIView {
         }
     }
     
-    public var weekdayHeight: CGFloat = 30 {
+    open var weekdayHeight: CGFloat = 30 {
         didSet {
             weekdayLabels.forEach { (label: UILabel) in
                 label.bs_height = weekdayHeight
@@ -109,93 +109,93 @@ public class BSCalendarView: UIView {
         }
     }
     
-    public var dayFont = UIFont.boldSystemFontOfSize(14)
+    open var dayFont = UIFont.boldSystemFont(ofSize: 14)
     
-    public var dayTextColor = UIColor.blackColor()
+    open var dayTextColor = UIColor.black
     
-    public var selectedDayTextColor = UIColor.whiteColor()
+    open var selectedDayTextColor = UIColor.white
     
-    public var weekendDayTextColor = UIColor.lightGrayColor()
+    open var weekendDayTextColor = UIColor.lightGray
     
-    public var futureDayTextColor = UIColor.lightGrayColor()
+    open var futureDayTextColor = UIColor.lightGray
     
-    public var roundDayTextColor = UIColor.clearColor()
+    open var roundDayTextColor = UIColor.clear
     
-    public var dayHeight: CGFloat = 40
+    open var dayHeight: CGFloat = 40
     
     //height change animation duration
-    public var animationDuration: NSTimeInterval = 0.25
+    open var animationDuration: TimeInterval = 0.25
     
-    public var displayingMonthCalendarHeight: CGFloat {
+    open var displayingMonthCalendarHeight: CGFloat {
         get {
             return caculateMonthCollectionItemHeight(displayingMonthItem)
         }
     }
     
     //MARK:items
-    public private(set) var willDisplayMonthItem: BSCalendarMonthItem!
+    open fileprivate(set) var willDisplayMonthItem: BSCalendarMonthItem!
     //this item would be different with 'displayingMonthItem' only when scroll half of size
-    public private(set) var didDisplayMonthItem: BSCalendarMonthItem!
-    public private(set) var displayingMonthItem: BSCalendarMonthItem! {
+    open fileprivate(set) var didDisplayMonthItem: BSCalendarMonthItem!
+    open fileprivate(set) var displayingMonthItem: BSCalendarMonthItem! {
         didSet {
             if displayingMonthItem != oldValue {
-                displayingMonthDidChangeClosure?(month: displayingMonthItem.month)
+                displayingMonthDidChangeClosure?(displayingMonthItem.month)
             }
         }
     }
     
     //private
-    private var headerHeight: CGFloat {
+    fileprivate var headerHeight: CGFloat {
         return self.monthHeight + self.weekdayHeight
     }
     
-    private var direction: CalendarScrollDirection = .Left
+    fileprivate var direction: CalendarScrollDirection = .left
     
-    private var shouldSetupFrame = true
+    fileprivate var shouldSetupFrame = true
     
-    private var lastSelectedDayItem: BSCalendarDayItem?
+    fileprivate var lastSelectedDayItem: BSCalendarDayItem?
     
-    private lazy var itemManager = BSCalendarItemManager()
+    fileprivate lazy var itemManager = BSCalendarItemManager()
     
     //MARK:UI
-    private lazy var monthLabel: UILabel = {
+    fileprivate lazy var monthLabel: UILabel = {
         let label: UILabel = UILabel()
-        label.text = "\(NSDate().month())" + "月"
-        label.textColor = UIColor.redColor()
-        label.font = UIFont.boldSystemFontOfSize(16)
-        label.textAlignment = .Center
+        label.text = "\(Date().month)" + "月"
+        label.textColor = UIColor.red
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textAlignment = .center
         
         return label
     }()
     
-    private lazy var bs_previousMonthButton: UIButton = {
+    fileprivate lazy var bs_previousMonthButton: UIButton = {
         let pButton: UIButton = UIButton()
-        pButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        pButton.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
-        pButton.setImage(UIImage(named: "bs_icon_arrow_left"), forState: .Normal)
-        pButton.addTarget(self, action: #selector(BSCalendarView.respondsTobs_previousMonthButton(_:)), forControlEvents: .TouchUpInside)
+        pButton.setTitleColor(UIColor.black, for: UIControlState())
+        pButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        pButton.setImage(UIImage(named: "bs_icon_arrow_left"), for: UIControlState())
+        pButton.addTarget(self, action: #selector(BSCalendarView.respondsTobs_previousMonthButton(_:)), for: .touchUpInside)
         return pButton
     }()
     
-    private lazy var bs_nextMonthButton: UIButton = {
+    fileprivate lazy var bs_nextMonthButton: UIButton = {
         let nButton: UIButton = UIButton()
-        nButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        nButton.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+        nButton.setTitleColor(UIColor.black, for: UIControlState())
+        nButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         
-        nButton.setImage(UIImage(named: "bs_icon_arrow_right"), forState: .Normal)
+        nButton.setImage(UIImage(named: "bs_icon_arrow_right"), for: UIControlState())
         nButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 0)
         nButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: Constants.ButtonWidth - 50 - 5)
         
-        nButton.addTarget(self, action: #selector(BSCalendarView.respondsTobs_nextMonthButton(_:)), forControlEvents: .TouchUpInside)
+        nButton.addTarget(self, action: #selector(BSCalendarView.respondsTobs_nextMonthButton(_:)), for: .touchUpInside)
         return nButton
     }()
     
-    private lazy var weekdayLabels: [UILabel] = {
+    fileprivate lazy var weekdayLabels: [UILabel] = {
         var labels: [UILabel] = []
         for i in 0..<self.weekdayTitles.count {
             let weekdayLabel: UILabel = UILabel()
             weekdayLabel.text = self.weekdayTitles[i]
-            weekdayLabel.textAlignment = .Center
+            weekdayLabel.textAlignment = .center
             weekdayLabel.font = self.weekdayFont
             weekdayLabel.textColor = self.weekdayTextColor
             labels.append(weekdayLabel)
@@ -203,28 +203,28 @@ public class BSCalendarView: UIView {
         return labels
     }()
     
-    private lazy var separator: CAShapeLayer = {
+    fileprivate lazy var separator: CAShapeLayer = {
         
         let separator: CAShapeLayer = CAShapeLayer()
-        separator.strokeColor = UIColor.lightGrayColor().CGColor
+        separator.strokeColor = UIColor.lightGray.cgColor
         separator.opacity = 0.5
         
         return separator
     }()
     
-    private lazy var monthCollectionView: UICollectionView = {
+    fileprivate lazy var monthCollectionView: UICollectionView = {
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
-        flowLayout.scrollDirection = .Horizontal
+        flowLayout.scrollDirection = .horizontal
         
-        let c : UICollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        c.registerClass(BSCalendarMonthCollectionCell.self, forCellWithReuseIdentifier: Constants.MonthCollectionReuseCellIdentifier)
+        let c : UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        c.register(BSCalendarMonthCollectionCell.self, forCellWithReuseIdentifier: Constants.MonthCollectionReuseCellIdentifier)
         c.dataSource = self
         c.delegate = self
-        c.backgroundColor = UIColor.clearColor()
-        c.pagingEnabled = true
+        c.backgroundColor = UIColor.clear
+        c.isPagingEnabled = true
         c.showsHorizontalScrollIndicator = false
         return c
     }()
@@ -239,7 +239,7 @@ public class BSCalendarView: UIView {
         setup()
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         guard shouldSetupFrame == true else {
@@ -254,9 +254,9 @@ public class BSCalendarView: UIView {
 //MARK:Private
 extension BSCalendarView {
     
-    private func setupFrame() {
-        monthLabel.frame = CGRect(origin: CGPointZero, size: CGSize(width: bs_width, height: monthHeight))
-        bs_previousMonthButton.frame = CGRect(origin: CGPointZero, size: CGSize(width: Constants.ButtonWidth, height: monthHeight))
+    fileprivate func setupFrame() {
+        monthLabel.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: bs_width, height: monthHeight))
+        bs_previousMonthButton.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: Constants.ButtonWidth, height: monthHeight))
         bs_nextMonthButton.frame = CGRect(origin: CGPoint(x: bs_width - Constants.ButtonWidth, y: 0), size: bs_previousMonthButton.bs_size)
         
         let weekdayLabelWidth = bs_width/7
@@ -269,25 +269,25 @@ extension BSCalendarView {
         //the calendar max rows is 6
         monthCollectionView.frame = CGRect(x: 0, y: headerHeight , width: bs_width, height: 6 * dayHeight)
         bs_height = caculateMonthCollectionItemHeight(displayingMonthItem)
-        heightDidChangeClosure?(height: bs_height)
+        heightDidChangeClosure?(bs_height)
         
         monthCollectionView.reloadData()
     }
     
-    private func scrollToDisplayingMonth() {
+    fileprivate func scrollToDisplayingMonth() {
         
-        let index = CGFloat(itemManager.monthItems.indexOf(displayingMonthItem)!)
+        let index = CGFloat(itemManager.monthItems.index(of: displayingMonthItem)!)
         monthCollectionView.setContentOffset(CGPoint(x: monthCollectionView.bs_width * index, y: 0), animated: false)
     }
     
-    private func setup() {
+    fileprivate func setup() {
 
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.white
         setupSubviews()
         setupDisplayMonthItem()
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(monthLabel)
         addSubview(bs_previousMonthButton)
         addSubview(bs_nextMonthButton)
@@ -298,10 +298,10 @@ extension BSCalendarView {
         addSubview(monthCollectionView)
     }
     
-    private func setupDisplayMonthItem() {
+    fileprivate func setupDisplayMonthItem() {
         
         let maxMonth = itemManager.monthItems.count - 1
-        let month = NSDate().month() - 1
+        let month = Date().month - 1
         let index = min(month, maxMonth)
         displayingMonthItem = itemManager.monthItems[index]
         didDisplayMonthItem = displayingMonthItem
@@ -310,13 +310,13 @@ extension BSCalendarView {
 
 extension BSCalendarView {
     
-    private func update() {
+    fileprivate func update() {
         updateDisplayMonthItem()
         updateViewHeight()
         didDisplayMonthItem = displayingMonthItem
     }
     
-    private func updateDisplayMonthItem() {
+    fileprivate func updateDisplayMonthItem() {
         
         let offsetX = monthCollectionView.contentOffset.x
         let width = monthCollectionView.bs_width
@@ -326,26 +326,26 @@ extension BSCalendarView {
         updateMonthText()
     }
     
-    private func updateMonthText() {
+    fileprivate func updateMonthText() {
         let displayingMonth = displayingMonthItem.month
         monthLabel.text = "\(displayingMonth)月"
         
-        bs_previousMonthButton.hidden = displayingMonth == 1
-        bs_nextMonthButton.hidden = displayingMonth == 12
+        bs_previousMonthButton.isHidden = displayingMonth == 1
+        bs_nextMonthButton.isHidden = displayingMonth == 12
         
-        bs_previousMonthButton.setTitle("\(displayingMonth - 1)月", forState: .Normal)
-        bs_nextMonthButton.setTitle("\(displayingMonth + 1)月", forState: .Normal)
+        bs_previousMonthButton.setTitle("\(displayingMonth! - 1)月", for: UIControlState())
+        bs_nextMonthButton.setTitle("\(displayingMonth! + 1)月", for: UIControlState())
         
-        let isFutureMonth = displayingMonth >= itemManager.monthItems.count
-        bs_nextMonthButton.enabled = !isFutureMonth
+        let isFutureMonth = displayingMonth! >= itemManager.monthItems.count
+        bs_nextMonthButton.isEnabled = !isFutureMonth
         if isFutureMonth == true {
-            bs_nextMonthButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
+            bs_nextMonthButton.setTitleColor(UIColor.gray, for: UIControlState())
         } else {
-            bs_nextMonthButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            bs_nextMonthButton.setTitleColor(UIColor.black, for: UIControlState())
         }
     }
     
-    private func updateViewHeight() {
+    fileprivate func updateViewHeight() {
         
         let height = caculateMonthCollectionItemHeight(displayingMonthItem)
         
@@ -353,14 +353,14 @@ extension BSCalendarView {
             self.bs_height = height
         }
         let completion: ((Bool) -> Void) = { [unowned self] _ in
-            self.heightDidChangeClosure?(height: height)
+            self.heightDidChangeClosure?(height)
             
         }
-        UIView.animateWithDuration(animationDuration, animations: animations, completion: completion)
+        UIView.animate(withDuration: animationDuration, animations: animations, completion: completion)
     }
     
     
-    private func changeHeightContinuous() {
+    fileprivate func changeHeightContinuous() {
         let scrollView: UIScrollView = monthCollectionView
         
         guard scrollView.contentOffset.x < scrollView.contentSize.width else {
@@ -373,7 +373,7 @@ extension BSCalendarView {
         
         let fraction = scrollView.contentOffset.x / scrollView.bs_width
         var percentage: CGFloat = 0
-        if direction == .Right {
+        if direction == .right {
             percentage = fraction - floor(fraction)
         } else {
             percentage = 1 - (fraction - floor(fraction))
@@ -389,60 +389,60 @@ extension BSCalendarView {
         
         bs_height = didDisplayHeight + subHeight * percentage
         
-        heightDidChangeClosure?(height: bs_height)
-        scrollXPercentageClosure?(percentage: percentage)
+        heightDidChangeClosure?(bs_height)
+        scrollXPercentageClosure?(percentage)
     }
 }
 
 extension BSCalendarView {
     
-    func respondsTobs_previousMonthButton(button: UIButton) {
+    func respondsTobs_previousMonthButton(_ button: UIButton) {
         shouldSetupFrame = false
         
         let displayingMonth = displayingMonthItem.month
-        let bs_previousMonth = displayingMonth - 1
+        let bs_previousMonth = displayingMonth! - 1
         let targetIndex = CGFloat(bs_previousMonth - monthRange.location)
-        monthCollectionView.setContentOffset(CGPointMake(monthCollectionView.bs_width * targetIndex, 0), animated: true)
+        monthCollectionView.setContentOffset(CGPoint(x: monthCollectionView.bs_width * targetIndex, y: 0), animated: true)
     }
     
-    func respondsTobs_nextMonthButton(button: UIButton) {
+    func respondsTobs_nextMonthButton(_ button: UIButton) {
         shouldSetupFrame = false
         
         let displayingMonth = displayingMonthItem.month
-        let bs_nextMonth = displayingMonth + 1
+        let bs_nextMonth = displayingMonth! + 1
         let targetIndex = CGFloat(bs_nextMonth - monthRange.location)
-        monthCollectionView.setContentOffset(CGPointMake(monthCollectionView.bs_width * targetIndex, 0), animated: true)
+        monthCollectionView.setContentOffset(CGPoint(x: monthCollectionView.bs_width * targetIndex, y: 0), animated: true)
     }
 }
 
 //MARK:Help
 extension BSCalendarView {
     
-    private func caculateMonthCollectionItemHeight(item: BSCalendarMonthItem) -> CGFloat {
+    fileprivate func caculateMonthCollectionItemHeight(_ item: BSCalendarMonthItem) -> CGFloat {
         return CGFloat(ceil(Double(item.dayItems.count)/7)) * dayHeight +
             headerHeight +
             Constants.BottomInset
     }
     
-    private func configureSeparatorPath() -> CGPath {
+    fileprivate func configureSeparatorPath() -> CGPath {
         let path = UIBezierPath()
-        path.moveToPoint(CGPoint(x: 0,
+        path.move(to: CGPoint(x: 0,
             y: self.headerHeight))
-        path.addLineToPoint(CGPoint(x: self.bs_width,
+        path.addLine(to: CGPoint(x: self.bs_width,
             y: self.headerHeight))
         
-        return path.CGPath;
+        return path.cgPath;
     }
 }
 
 extension BSCalendarView: UICollectionViewDataSource {
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemManager.monthItems.count
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.MonthCollectionReuseCellIdentifier, forIndexPath: indexPath) as! BSCalendarMonthCollectionCell
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.MonthCollectionReuseCellIdentifier, for: indexPath) as! BSCalendarMonthCollectionCell
         
         cell.themeColor = themeColor
         
@@ -460,7 +460,7 @@ extension BSCalendarView: UICollectionViewDataSource {
         cell.monthItem = itemManager.monthItems[indexPath.row]
         
         cell.dayDidSelectedClosure = { [unowned self] dayItem in
-            self.dayDidSelectedClosure?(dayItem: dayItem)
+            self.dayDidSelectedClosure?(dayItem)
 
             if self.lastSelectedDayItem != dayItem {
                 self.lastSelectedDayItem?.isSelectedDay = false
@@ -474,47 +474,47 @@ extension BSCalendarView: UICollectionViewDataSource {
 
 extension BSCalendarView: UICollectionViewDelegate {
 
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         willDisplayMonthItem = itemManager.monthItems[indexPath.row]
         
-        let displayingIndexPath = NSIndexPath(forRow: itemManager.monthItems.indexOf(displayingMonthItem)!, inSection: 0)
+        let displayingIndexPath = IndexPath(row: itemManager.monthItems.index(of: displayingMonthItem)!, section: 0)
 
         let sub = indexPath.row - displayingIndexPath.row
         //if to right
         if sub > 0 {
-            direction = .Right
+            direction = .right
             //to left
         } else {
-            direction = .Left
+            direction = .left
         }
     }
 }
 
 extension BSCalendarView: UIScrollViewDelegate {
     
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         update()
     }
     
-    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         update()
     }
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         updateDisplayMonthItem()
         changeHeightContinuous()
     }
     
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         shouldSetupFrame = false
     }
 }
 
 extension BSCalendarView: UICollectionViewDelegateFlowLayout {
     
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bs_size
     }
 }

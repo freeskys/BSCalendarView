@@ -13,21 +13,21 @@ class BSViewController: UIViewController {
     @IBOutlet weak var calendarView: BSCalendarView! {
         didSet {
 
-            calendarView.backgroundColor = UIColor.lightGrayColor()
-            calendarView.themeColor = UIColor.greenColor()
+            calendarView.backgroundColor = UIColor.lightGray
+            calendarView.themeColor = UIColor.green
             calendarView.monthRange = NSMakeRange(1, 11)
             calendarView.separatorHidden = true
             calendarView.monthHeight = 50
             calendarView.weekdayTitles = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-            calendarView.weekdayFont = UIFont.boldSystemFontOfSize(16)
-            calendarView.weekdayTextColor = UIColor.brownColor()
+            calendarView.weekdayFont = UIFont.boldSystemFont(ofSize: 16)
+            calendarView.weekdayTextColor = UIColor.brown
             calendarView.weekdayHeight = 40
-            calendarView.dayFont = UIFont.boldSystemFontOfSize(16)
-            calendarView.dayTextColor = UIColor.redColor()
-            calendarView.selectedDayTextColor = UIColor.whiteColor()
-            calendarView.weekendDayTextColor = UIColor.greenColor()
-            calendarView.futureDayTextColor = UIColor.blueColor()
-            calendarView.roundDayTextColor = UIColor.cyanColor()
+            calendarView.dayFont = UIFont.boldSystemFont(ofSize: 16)
+            calendarView.dayTextColor = UIColor.red
+            calendarView.selectedDayTextColor = UIColor.white
+            calendarView.weekendDayTextColor = UIColor.green
+            calendarView.futureDayTextColor = UIColor.blue
+            calendarView.roundDayTextColor = UIColor.cyan
             calendarView.dayHeight = 50
             
             calendarView.heightDidChangeClosure = { height in

@@ -14,12 +14,12 @@ class BSTableViewController: UITableViewController {
         super.viewDidLoad()
 
         let calendarView = BSCalendarView(frame: CGRect(x: 0, y: 0, width: view.bs_width, height: 0))
-        calendarView.backgroundColor = UIColor.clearColor()
+        calendarView.backgroundColor = UIColor.clear
         tableView.addSubview(calendarView)
         
         calendarView.heightDidChangeClosure = { [unowned self] height in
             calendarView.bs_origin.y = -height
-            self.tableView.contentOffset = CGPointMake(0, -height - 64)
+            self.tableView.contentOffset = CGPoint(x: 0, y: -height - 64)
             self.tableView.contentInset = UIEdgeInsetsMake(height + 64, 0, 0, 0)
         }
         

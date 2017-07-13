@@ -20,7 +20,7 @@ class BSFallDownViewController: UIViewController {
     lazy var calendarView: BSCalendarView = {
         
         let calendarView: BSCalendarView = BSCalendarView(frame: CGRect(x: 10, y: 10, width: self.view.bs_width - 20, height: 0))
-        calendarView.hidden = true
+        calendarView.isHidden = true
         calendarView.layer.cornerRadius = 5
         calendarView.layer.shadowOpacity = 0.5
         calendarView.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -40,9 +40,9 @@ class BSFallDownViewController: UIViewController {
         }
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
-        calendarView.hidden = false
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        calendarView.isHidden = false
         struct Static {
             static var didShow = false
         }
@@ -50,7 +50,7 @@ class BSFallDownViewController: UIViewController {
         if Static.didShow == false {
             calendarContentView.bs_height = 0
             
-            UIView.animateWithDuration(0.5) { [weak self] in
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
                 
                 guard let strongSelf = self else {
                     return
@@ -58,17 +58,17 @@ class BSFallDownViewController: UIViewController {
                 
                 strongSelf.calendarContentView.bs_height = strongSelf.calendarView.displayingMonthCalendarHeight + 20
                 
-            }
+            }) 
             Static.didShow = true
         } else {
-            UIView.animateWithDuration(0.5) { [weak self] in
+            UIView.animate(withDuration: 0.5, animations: { [weak self] in
                 
                 guard let strongSelf = self else {
                     return
                 }
                 strongSelf.calendarContentView.bs_height = 0
                 
-            }
+            }) 
             Static.didShow = false
         }
     }

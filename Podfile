@@ -4,6 +4,6 @@
 use_frameworks!
 
 target 'BSCalendarViewSample' do
-pod 'DateTools', '~> 1.7.0'
+pod 'DateToolsSwift', '~> 2.0'
 end
 

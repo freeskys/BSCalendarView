@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class BSCalendarMonthItem: NSObject {
+open class BSCalendarMonthItem: NSObject {
 
-    public var month: Int!
-    public var dayItems: [BSCalendarDayItem]!
+    open var month: Int!
+    open var dayItems: [BSCalendarDayItem]!
     
 }

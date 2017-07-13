@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A0F31060EEFEA56950F4D41 /* Pods_BSCalendarViewSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9562CCECDAB9C15F29604D08 /* Pods_BSCalendarViewSample.framework */; };
+		648403FB3A58A255E0D649ED /* Pods_BSCalendarViewSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD87B79ECEBA0628CC9E1D8F /* Pods_BSCalendarViewSample.framework */; };
 		84A5675E1D02BC5F007EC435 /* BSFallDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5675D1D02BC5F007EC435 /* BSFallDownViewController.swift */; };
 		84BDB18F1CEF559F00D65C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDB18E1CEF559F00D65C8F /* AppDelegate.swift */; };
 		84BDB1911CEF559F00D65C8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDB1901CEF559F00D65C8F /* ViewController.swift */; };
@@ -28,8 +28,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7B68FA7AFE3B6A9D9108A503 /* Pods-BSCalendarViewSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSCalendarViewSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BSCalendarViewSample/Pods-BSCalendarViewSample.debug.xcconfig"; sourceTree = "<group>"; };
-		7B9ECCBC5E19EBB1C8904CAF /* Pods-BSCalendarViewSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSCalendarViewSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-BSCalendarViewSample/Pods-BSCalendarViewSample.release.xcconfig"; sourceTree = "<group>"; };
 		84A5675D1D02BC5F007EC435 /* BSFallDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSFallDownViewController.swift; sourceTree = "<group>"; };
 		84BDB18B1CEF559F00D65C8F /* BSCalendarViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BSCalendarViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BDB18E1CEF559F00D65C8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,7 +47,9 @@
 		84BDB1B51CEFF13200D65C8F /* BSTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSTableViewController.swift; sourceTree = "<group>"; };
 		84BDB1B71CEFF13D00D65C8F /* BSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSViewController.swift; sourceTree = "<group>"; };
 		84F15F251CFFD1E300B718F9 /* NSDate+BSExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+BSExt.swift"; sourceTree = "<group>"; };
-		9562CCECDAB9C15F29604D08 /* Pods_BSCalendarViewSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSCalendarViewSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89838B4EB26D6886EDF3A9C4 /* Pods-BSCalendarViewSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSCalendarViewSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-BSCalendarViewSample/Pods-BSCalendarViewSample.release.xcconfig"; sourceTree = "<group>"; };
+		DD14B6C61C7738F5A94F97A3 /* Pods-BSCalendarViewSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSCalendarViewSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BSCalendarViewSample/Pods-BSCalendarViewSample.debug.xcconfig"; sourceTree = "<group>"; };
+		FD87B79ECEBA0628CC9E1D8F /* Pods_BSCalendarViewSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSCalendarViewSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,20 +57,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A0F31060EEFEA56950F4D41 /* Pods_BSCalendarViewSample.framework in Frameworks */,
+				648403FB3A58A255E0D649ED /* Pods_BSCalendarViewSample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3F74025ED26087F386B5A2B5 /* Pods */ = {
+		0DD25CEC5D12CA45741CA67D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7B68FA7AFE3B6A9D9108A503 /* Pods-BSCalendarViewSample.debug.xcconfig */,
-				7B9ECCBC5E19EBB1C8904CAF /* Pods-BSCalendarViewSample.release.xcconfig */,
+				DD14B6C61C7738F5A94F97A3 /* Pods-BSCalendarViewSample.debug.xcconfig */,
+				89838B4EB26D6886EDF3A9C4 /* Pods-BSCalendarViewSample.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		83383F0A1E9227463601535A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD87B79ECEBA0628CC9E1D8F /* Pods_BSCalendarViewSample.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		84BDB1821CEF559F00D65C8F = {
@@ -78,8 +86,8 @@
 			children = (
 				84BDB18D1CEF559F00D65C8F /* BSCalendarViewSample */,
 				84BDB18C1CEF559F00D65C8F /* Products */,
-				3F74025ED26087F386B5A2B5 /* Pods */,
-				EAF05DCCA29A5D01C146B84F /* Frameworks */,
+				0DD25CEC5D12CA45741CA67D /* Pods */,
+				83383F0A1E9227463601535A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,14 +132,6 @@
 			path = BSCalendarView;
 			sourceTree = "<group>";
 		};
-		EAF05DCCA29A5D01C146B84F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9562CCECDAB9C15F29604D08 /* Pods_BSCalendarViewSample.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -139,12 +139,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84BDB19D1CEF559F00D65C8F /* Build configuration list for PBXNativeTarget "BSCalendarViewSample" */;
 			buildPhases = (
-				5A2312CDE03140D61639EAD1 /* Check Pods Manifest.lock */,
+				6DACACDFA009E9888BA9F073 /* [CP] Check Pods Manifest.lock */,
 				84BDB1871CEF559F00D65C8F /* Sources */,
 				84BDB1881CEF559F00D65C8F /* Frameworks */,
 				84BDB1891CEF559F00D65C8F /* Resources */,
-				D397D9E8E4B14D82265BD132 /* Embed Pods Frameworks */,
-				07832C66D494BEDA727033FE /* Copy Pods Resources */,
+				82C26E157EF4A4526BE78E59 /* [CP] Embed Pods Frameworks */,
+				0C523984D0EA81989EAF10F9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,6 +167,7 @@
 				TargetAttributes = {
 					84BDB18A1CEF559F00D65C8F = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -202,14 +203,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		07832C66D494BEDA727033FE /* Copy Pods Resources */ = {
+		0C523984D0EA81989EAF10F9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,29 +218,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BSCalendarViewSample/Pods-BSCalendarViewSample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5A2312CDE03140D61639EAD1 /* Check Pods Manifest.lock */ = {
+		6DACACDFA009E9888BA9F073 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D397D9E8E4B14D82265BD132 /* Embed Pods Frameworks */ = {
+		82C26E157EF4A4526BE78E59 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -378,25 +379,27 @@
 		};
 		84BDB19E1CEF559F00D65C8F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B68FA7AFE3B6A9D9108A503 /* Pods-BSCalendarViewSample.debug.xcconfig */;
+			baseConfigurationReference = DD14B6C61C7738F5A94F97A3 /* Pods-BSCalendarViewSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BSCalendarViewSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = blurryssky.BSCalendarViewSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		84BDB19F1CEF559F00D65C8F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B9ECCBC5E19EBB1C8904CAF /* Pods-BSCalendarViewSample.release.xcconfig */;
+			baseConfigurationReference = 89838B4EB26D6886EDF3A9C4 /* Pods-BSCalendarViewSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BSCalendarViewSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = blurryssky.BSCalendarViewSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

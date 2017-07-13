@@ -9,21 +9,21 @@
 import UIKit
 
 enum BSCalendarDayCollectionHeaderLineStyle {
-    case FullWidth
-    case RelativeMargin
+    case fullWidth
+    case relativeMargin
 }
 
 class BSCalendarDayCollectionReusableHeaderView: UICollectionReusableView {
     
-    var style: BSCalendarDayCollectionHeaderLineStyle = .RelativeMargin {
+    var style: BSCalendarDayCollectionHeaderLineStyle = .relativeMargin {
         didSet {
             layoutIfNeeded()
         }
     }
     
-    private lazy var lineLayer: CAShapeLayer = {
+    fileprivate lazy var lineLayer: CAShapeLayer = {
         let lineLayer = CAShapeLayer()
-        lineLayer.strokeColor = UIColor.lightGrayColor().CGColor
+        lineLayer.strokeColor = UIColor.lightGray.cgColor
         lineLayer.opacity = 0.5
         return lineLayer
     }()
@@ -41,14 +41,14 @@ class BSCalendarDayCollectionReusableHeaderView: UICollectionReusableView {
         super.layoutSubviews()
         let path = UIBezierPath()
         
-        if style == .FullWidth {
-            path.moveToPoint(CGPoint(x: 0, y: self.bounds.size.height/2))
-            path.addLineToPoint(CGPoint(x: self.bounds.size.width, y: self.bounds.size.height/2))
+        if style == .fullWidth {
+            path.move(to: CGPoint(x: 0, y: self.bounds.size.height/2))
+            path.addLine(to: CGPoint(x: self.bounds.size.width, y: self.bounds.size.height/2))
         } else {
-            path.moveToPoint(CGPoint(x: 5, y: self.bounds.size.height/2))
-            path.addLineToPoint(CGPoint(x: self.bounds.size.width - 10, y: self.bounds.size.height/2))
+            path.move(to: CGPoint(x: 5, y: self.bounds.size.height/2))
+            path.addLine(to: CGPoint(x: self.bounds.size.width - 10, y: self.bounds.size.height/2))
         }
 
-        lineLayer.path = path.CGPath;
+        lineLayer.path = path.cgPath;
     }
 }

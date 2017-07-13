@@ -8,15 +8,15 @@
 
 import UIKit
 
-public class BSCalendarDayItem: NSObject {
+open class BSCalendarDayItem: NSObject {
 
-    public var month: Int!
-    public var day: Int!
+    open var month: Int!
+    open var day: Int!
     
-    public var isToday: Bool = false
-    public var isWeekendDay: Bool = false
-    public var isFutureDay: Bool = false
-    public var isSelectedDay: Bool = false
-    public var isRoundDay: Bool = false
+    open var isToday: Bool = false
+    open var isWeekendDay: Bool = false
+    open var isFutureDay: Bool = false
+    open var isSelectedDay: Bool = false
+    open var isRoundDay: Bool = false
     
 }

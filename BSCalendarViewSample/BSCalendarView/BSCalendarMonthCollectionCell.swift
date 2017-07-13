@@ -41,7 +41,7 @@ class BSCalendarMonthCollectionCell: UICollectionViewCell {
     var futureDayTextColor: UIColor!
     var roundDayTextColor: UIColor!
     
-    private lazy var dayCollectionView: UICollectionView = {
+    fileprivate lazy var dayCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
@@ -51,12 +51,12 @@ class BSCalendarMonthCollectionCell: UICollectionViewCell {
         
         let c : UICollectionView = UICollectionView(frame: self.bounds,
                                                     collectionViewLayout: flowLayout)
-        c.registerClass(BSCalendarDayCollectionCell.self,
+        c.register(BSCalendarDayCollectionCell.self,
                         forCellWithReuseIdentifier: Constants.DayCollectionReuseCellIdentifier)
-        c.registerClass(BSCalendarDayCollectionReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.DayCollectionReuseableHeaderViewIdentifier)
+        c.register(BSCalendarDayCollectionReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.DayCollectionReuseableHeaderViewIdentifier)
         c.dataSource = self
         c.delegate = self
-        c.backgroundColor = UIColor.clearColor()
+        c.backgroundColor = UIColor.clear
         return c
     }()
     
@@ -80,12 +80,12 @@ extension BSCalendarMonthCollectionCell {
         }
         lastSelectedDayItem?.isSelectedDay = false
         
-        guard let index = monthItem.dayItems.indexOf(lastSelectedDayItem!) else {
+        guard let index = monthItem.dayItems.index(of: lastSelectedDayItem!) else {
             return
         }
-        let indexPath = NSIndexPath(forRow: index%7, inSection: index/7)
+        let indexPath = IndexPath(row: index%7, section: index/7)
         
-        guard let cell = dayCollectionView.cellForItemAtIndexPath(indexPath) as? BSCalendarDayCollectionCell else {
+        guard let cell = dayCollectionView.cellForItem(at: indexPath) as? BSCalendarDayCollectionCell else {
             return
         }
         
@@ -95,12 +95,12 @@ extension BSCalendarMonthCollectionCell {
 
 extension BSCalendarMonthCollectionCell: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         let section = Int(ceil(Double(monthItem.dayItems.count)/7))
         return section
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == Int(ceil(Double(monthItem.dayItems.count)/7)) - 1 &&
             monthItem.dayItems.count%7 != 0{
             return monthItem.dayItems.count%7
@@ -108,9 +108,9 @@ extension BSCalendarMonthCollectionCell: UICollectionViewDataSource {
         return 7
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.DayCollectionReuseCellIdentifier, forIndexPath: indexPath) as! BSCalendarDayCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.DayCollectionReuseCellIdentifier, for: indexPath) as! BSCalendarDayCollectionCell
         let dayItem = monthItem.dayItems[indexPath.section * 7 + indexPath.row]
         
         if indexPath.row == 0 || indexPath.row == 6 {
@@ -131,10 +131,10 @@ extension BSCalendarMonthCollectionCell: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         var view: UICollectionReusableView!
         if kind == UICollectionElementKindSectionHeader {
-            view = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.DayCollectionReuseableHeaderViewIdentifier, forIndexPath: indexPath)
+            view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: Constants.DayCollectionReuseableHeaderViewIdentifier, for: indexPath)
         }
         return view
     }
@@ -142,26 +142,26 @@ extension BSCalendarMonthCollectionCell: UICollectionViewDataSource {
 
 extension BSCalendarMonthCollectionCell: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: floor(bs_width/7),
                       height: dayHeight)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            return CGSizeZero
+            return CGSize.zero
         } else {
             if separatorHidden == false {
                 return CGSize(width: bs_width, height: 0.5)
             } else {
-                return CGSizeZero
+                return CGSize.zero
             }
         }
     }
 }
 
 extension BSCalendarMonthCollectionCell: UICollectionViewDelegate {
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let dayItem = monthItem.dayItems[indexPath.section * 7 + indexPath.row]
         
@@ -178,9 +178,9 @@ extension BSCalendarMonthCollectionCell: UICollectionViewDelegate {
         }
         
         dayItem.isSelectedDay = true
-        dayDidSelectedClosure?(dayItem: dayItem)
+        dayDidSelectedClosure?(dayItem)
         
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? BSCalendarDayCollectionCell else {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? BSCalendarDayCollectionCell else {
             return
         }
         
